@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { prisma } from '../utils/prisma/index.js';
+import { userDataClient } from '../utils/prisma/index.js';
 
 //사용자 인증 미들웨어
 export default async function (req, res, next) {
@@ -16,7 +16,7 @@ export default async function (req, res, next) {
         const decodedToken = jwt.verify(token, 'customized_secret_key');
         const accountId = decodedToken.accountId;
         //4. JWT의 'userId'기반으로 사용자 조회
-        const account = await prisma.account.findFirst({
+        const account = await userDataClient.account.findFirst({
             where: { accountId: +accountId },
         })
         //4-1. user 탐색 실패시

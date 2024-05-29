@@ -1,7 +1,7 @@
 // src/utils/prisma/index.js
 
-import { PrismaClient as GameDataClient } from "../../../prisma/game/generated/gameDataClient/index.js";
-import {PrismaClient as UserDataClient} from "../../../prisma/user/generated/userDataClient/index.js";
+import { PrismaClient as GameDataClient } from "../../prisma/game/generated/gameDataClient/index.js";
+import {PrismaClient as UserDataClient} from "../../prisma/user/generated/userDataClient/index.js";
 
 export const gameDataClient = new PrismaClient({
   // Prisma를 이용해 데이터베이스를 접근할 때, SQL을 출력해줍니다.
