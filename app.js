@@ -1,7 +1,7 @@
 import express from 'express';
 import dotenv from "dotenv";
 import cookieParser from 'cookie-parser';
-import accountsRouter from './routes/accounts.router.js';
+import accountsRouter from './src/routes/accounts.router.js';
 // import GameRouter from './routes/game.router.js';
 
 dotenv.config();
