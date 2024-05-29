@@ -3,6 +3,7 @@ import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { prisma } from "../src/utils/prisma/index.js"; // 실제 경로로 수정
+import authMiddleware from "../src/middlewares/auth.middleware.js";
 
 const router = express.Router();
 
@@ -59,5 +60,22 @@ router.post('/sign-in',async(req,res,next)=>
     res.cookie('authorization',`Bearer ${token}`);
     return res.status(200).json({message: '로그인 성공했습니다.'});
 });
+
+/*사용자 조회 API */
+router.get('/accounts', authMiddleware, async(req,res,next)=>{
+  //1. 클라이언트가 로그인된 사용자인지 검증한다.
+  const {accountId} = req.account;
+
+  //2. 계정을 조회할 때, 1:N관계를 맺고 있는 캐릭터들을 조회
+  const account = await prisma.account.findUnique({
+    where: { accountId: +accountId },
+    select: {
+    accountId: true,
+    email: true,
+    createdAt: true,
+    updatedAt: true,
+    }
+  })
+})
 
 export default router;
