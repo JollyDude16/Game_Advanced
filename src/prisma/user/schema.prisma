@@ -31,7 +31,8 @@ model Character {
   accountId   Int @map("accountId")
 
   name        String @unique @map("name")
-  power Int @default(500)
+  health Int @default(500)
+  power Int @default(100)
   money Int @default(10000)
 
   createdAt DateTime @default(now()) @map("createdAt")
