@@ -1,8 +1,8 @@
 import express from 'express';
 import dotenv from "dotenv";
 import cookieParser from 'cookie-parser';
-import accountsRouter from './src/routes/accounts.router.js';
-// import GameRouter from './routes/game.router.js';
+import AccountsRouter from './src/routes/accounts.router.js';
+import GameRouter from './src/routes/accounts.router.js';
 
 dotenv.config();
 
@@ -12,7 +12,7 @@ const PORT = 3018;
 app.use(express.json());
 app.use(express.urlencoded({enxtended:false}));
 app.use(cookieParser());
-app.use('/api', [accountsRouter]);
+app.use('/api', [AccountsRouter]);
 
 app.listen(PORT, () => {
   console.log(PORT, '포트로 서버가 열렸어요!');
