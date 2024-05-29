@@ -2,7 +2,7 @@
 import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { userDataClient as prisma } from '../utils/prisma/index.js';
+import { accountDataClient as prisma } from '../utils/prisma/index.js';
 import authMiddleware from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
@@ -42,7 +42,7 @@ router.post('/sign-up', async (req, res, next) => {
 
     // 사용자 생성
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await prisma.account.create({
+    const account = await prisma.account.create({
       data: {
         email,
         password: hashedPassword,
@@ -50,7 +50,7 @@ router.post('/sign-up', async (req, res, next) => {
       },
     });
 
-    return res.status(201).json({ message: '회원가입이 완료되었습니다.', user }); // user 객체 추가
+    return res.status(201).json({ message: '회원가입이 완료되었습니다.', account }); // account 객체 추가
   } catch (error) {
     console.error(error); // 오류 로그 기록
     return res.status(500).json({ message: '서버 오류가 발생했습니다.', error: error.message });
@@ -95,5 +95,44 @@ router.get('/accounts', authMiddleware, async(req,res,next)=>{
     }
   })
 })
+
+//character 생성 api
+router.post ('/character', authMiddleware, async(req, res, next)=>{
+const {name} = req.body;
+const accountId = req.account.id;
+
+try{
+const isExistCharacterName = await prisma.character.findUnique({
+  where: {name},
+});
+if(isExistCharacterName){
+  return res.status(409).json({message:"이미 존재하는 캐릭터 명입니다."});
+}
+const newCharacter = await prisma.character.create({
+  data:{
+    name,
+    accountId,
+    health: 500,
+    money: 10000,
+    characterInventory:{
+    create: [],
+    },
+  },
+  include:{
+    chracterInventory:true,
+    chracterItem:true,
+  },
+});
+return res.status(201).json({id: newCharacter.id});
+}
+catch(error){
+console.error("캐릭터 생성 중 에러 발생:", error);
+return res
+.status(500)
+.json({message: "캐릭터 생성중 오류가 발생했습니다."});
+}
+});
+
+//캐릭터 삭제 api
 
 export default router;
