@@ -2290,6 +2290,7 @@ export namespace Prisma {
   export type CharacterAvgAggregateOutputType = {
     characterId: number | null
     accountId: number | null
+    health: number | null
     power: number | null
     money: number | null
   }
@@ -2297,6 +2298,7 @@ export namespace Prisma {
   export type CharacterSumAggregateOutputType = {
     characterId: number | null
     accountId: number | null
+    health: number | null
     power: number | null
     money: number | null
   }
@@ -2305,6 +2307,7 @@ export namespace Prisma {
     characterId: number | null
     accountId: number | null
     name: string | null
+    health: number | null
     power: number | null
     money: number | null
     createdAt: Date | null
@@ -2315,6 +2318,7 @@ export namespace Prisma {
     characterId: number | null
     accountId: number | null
     name: string | null
+    health: number | null
     power: number | null
     money: number | null
     createdAt: Date | null
@@ -2325,6 +2329,7 @@ export namespace Prisma {
     characterId: number
     accountId: number
     name: number
+    health: number
     power: number
     money: number
     createdAt: number
@@ -2336,6 +2341,7 @@ export namespace Prisma {
   export type CharacterAvgAggregateInputType = {
     characterId?: true
     accountId?: true
+    health?: true
     power?: true
     money?: true
   }
@@ -2343,6 +2349,7 @@ export namespace Prisma {
   export type CharacterSumAggregateInputType = {
     characterId?: true
     accountId?: true
+    health?: true
     power?: true
     money?: true
   }
@@ -2351,6 +2358,7 @@ export namespace Prisma {
     characterId?: true
     accountId?: true
     name?: true
+    health?: true
     power?: true
     money?: true
     createdAt?: true
@@ -2361,6 +2369,7 @@ export namespace Prisma {
     characterId?: true
     accountId?: true
     name?: true
+    health?: true
     power?: true
     money?: true
     createdAt?: true
@@ -2371,6 +2380,7 @@ export namespace Prisma {
     characterId?: true
     accountId?: true
     name?: true
+    health?: true
     power?: true
     money?: true
     createdAt?: true
@@ -2468,6 +2478,7 @@ export namespace Prisma {
     characterId: number
     accountId: number
     name: string
+    health: number
     power: number
     money: number
     createdAt: Date
@@ -2497,6 +2508,7 @@ export namespace Prisma {
     characterId?: boolean
     accountId?: boolean
     name?: boolean
+    health?: boolean
     power?: boolean
     money?: boolean
     createdAt?: boolean
@@ -2511,6 +2523,7 @@ export namespace Prisma {
     characterId?: boolean
     accountId?: boolean
     name?: boolean
+    health?: boolean
     power?: boolean
     money?: boolean
     createdAt?: boolean
@@ -2537,6 +2550,7 @@ export namespace Prisma {
       characterId: number
       accountId: number
       name: string
+      health: number
       power: number
       money: number
       createdAt: Date
@@ -2943,6 +2957,7 @@ export namespace Prisma {
     readonly characterId: FieldRef<"Character", 'Int'>
     readonly accountId: FieldRef<"Character", 'Int'>
     readonly name: FieldRef<"Character", 'String'>
+    readonly health: FieldRef<"Character", 'Int'>
     readonly power: FieldRef<"Character", 'Int'>
     readonly money: FieldRef<"Character", 'Int'>
     readonly createdAt: FieldRef<"Character", 'DateTime'>
@@ -6179,6 +6194,7 @@ export namespace Prisma {
     characterId: 'characterId',
     accountId: 'accountId',
     name: 'name',
+    health: 'health',
     power: 'power',
     money: 'money',
     createdAt: 'createdAt',
@@ -6333,6 +6349,7 @@ export namespace Prisma {
     characterId?: IntFilter<"Character"> | number
     accountId?: IntFilter<"Character"> | number
     name?: StringFilter<"Character"> | string
+    health?: IntFilter<"Character"> | number
     power?: IntFilter<"Character"> | number
     money?: IntFilter<"Character"> | number
     createdAt?: DateTimeFilter<"Character"> | Date | string
@@ -6346,6 +6363,7 @@ export namespace Prisma {
     characterId?: SortOrder
     accountId?: SortOrder
     name?: SortOrder
+    health?: SortOrder
     power?: SortOrder
     money?: SortOrder
     createdAt?: SortOrder
@@ -6362,6 +6380,7 @@ export namespace Prisma {
     OR?: CharacterWhereInput[]
     NOT?: CharacterWhereInput | CharacterWhereInput[]
     accountId?: IntFilter<"Character"> | number
+    health?: IntFilter<"Character"> | number
     power?: IntFilter<"Character"> | number
     money?: IntFilter<"Character"> | number
     createdAt?: DateTimeFilter<"Character"> | Date | string
@@ -6375,6 +6394,7 @@ export namespace Prisma {
     characterId?: SortOrder
     accountId?: SortOrder
     name?: SortOrder
+    health?: SortOrder
     power?: SortOrder
     money?: SortOrder
     createdAt?: SortOrder
@@ -6393,6 +6413,7 @@ export namespace Prisma {
     characterId?: IntWithAggregatesFilter<"Character"> | number
     accountId?: IntWithAggregatesFilter<"Character"> | number
     name?: StringWithAggregatesFilter<"Character"> | string
+    health?: IntWithAggregatesFilter<"Character"> | number
     power?: IntWithAggregatesFilter<"Character"> | number
     money?: IntWithAggregatesFilter<"Character"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Character"> | Date | string
@@ -6634,6 +6655,7 @@ export namespace Prisma {
 
   export type CharacterCreateInput = {
     name: string
+    health?: number
     power?: number
     money?: number
     createdAt?: Date | string
@@ -6647,6 +6669,7 @@ export namespace Prisma {
     characterId?: number
     accountId: number
     name: string
+    health?: number
     power?: number
     money?: number
     createdAt?: Date | string
@@ -6657,6 +6680,7 @@ export namespace Prisma {
 
   export type CharacterUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
+    health?: IntFieldUpdateOperationsInput | number
     power?: IntFieldUpdateOperationsInput | number
     money?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6670,6 +6694,7 @@ export namespace Prisma {
     characterId?: IntFieldUpdateOperationsInput | number
     accountId?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    health?: IntFieldUpdateOperationsInput | number
     power?: IntFieldUpdateOperationsInput | number
     money?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6682,6 +6707,7 @@ export namespace Prisma {
     characterId?: number
     accountId: number
     name: string
+    health?: number
     power?: number
     money?: number
     createdAt?: Date | string
@@ -6690,6 +6716,7 @@ export namespace Prisma {
 
   export type CharacterUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
+    health?: IntFieldUpdateOperationsInput | number
     power?: IntFieldUpdateOperationsInput | number
     money?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6700,6 +6727,7 @@ export namespace Prisma {
     characterId?: IntFieldUpdateOperationsInput | number
     accountId?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    health?: IntFieldUpdateOperationsInput | number
     power?: IntFieldUpdateOperationsInput | number
     money?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7016,6 +7044,7 @@ export namespace Prisma {
     characterId?: SortOrder
     accountId?: SortOrder
     name?: SortOrder
+    health?: SortOrder
     power?: SortOrder
     money?: SortOrder
     createdAt?: SortOrder
@@ -7025,6 +7054,7 @@ export namespace Prisma {
   export type CharacterAvgOrderByAggregateInput = {
     characterId?: SortOrder
     accountId?: SortOrder
+    health?: SortOrder
     power?: SortOrder
     money?: SortOrder
   }
@@ -7033,6 +7063,7 @@ export namespace Prisma {
     characterId?: SortOrder
     accountId?: SortOrder
     name?: SortOrder
+    health?: SortOrder
     power?: SortOrder
     money?: SortOrder
     createdAt?: SortOrder
@@ -7043,6 +7074,7 @@ export namespace Prisma {
     characterId?: SortOrder
     accountId?: SortOrder
     name?: SortOrder
+    health?: SortOrder
     power?: SortOrder
     money?: SortOrder
     createdAt?: SortOrder
@@ -7052,6 +7084,7 @@ export namespace Prisma {
   export type CharacterSumOrderByAggregateInput = {
     characterId?: SortOrder
     accountId?: SortOrder
+    health?: SortOrder
     power?: SortOrder
     money?: SortOrder
   }
@@ -7503,6 +7536,7 @@ export namespace Prisma {
 
   export type CharacterCreateWithoutAccountInput = {
     name: string
+    health?: number
     power?: number
     money?: number
     createdAt?: Date | string
@@ -7514,6 +7548,7 @@ export namespace Prisma {
   export type CharacterUncheckedCreateWithoutAccountInput = {
     characterId?: number
     name: string
+    health?: number
     power?: number
     money?: number
     createdAt?: Date | string
@@ -7555,6 +7590,7 @@ export namespace Prisma {
     characterId?: IntFilter<"Character"> | number
     accountId?: IntFilter<"Character"> | number
     name?: StringFilter<"Character"> | string
+    health?: IntFilter<"Character"> | number
     power?: IntFilter<"Character"> | number
     money?: IntFilter<"Character"> | number
     createdAt?: DateTimeFilter<"Character"> | Date | string
@@ -7707,6 +7743,7 @@ export namespace Prisma {
 
   export type CharacterCreateWithoutEquippedItemsInput = {
     name: string
+    health?: number
     power?: number
     money?: number
     createdAt?: Date | string
@@ -7719,6 +7756,7 @@ export namespace Prisma {
     characterId?: number
     accountId: number
     name: string
+    health?: number
     power?: number
     money?: number
     createdAt?: Date | string
@@ -7766,6 +7804,7 @@ export namespace Prisma {
 
   export type CharacterUpdateWithoutEquippedItemsInput = {
     name?: StringFieldUpdateOperationsInput | string
+    health?: IntFieldUpdateOperationsInput | number
     power?: IntFieldUpdateOperationsInput | number
     money?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7778,6 +7817,7 @@ export namespace Prisma {
     characterId?: IntFieldUpdateOperationsInput | number
     accountId?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    health?: IntFieldUpdateOperationsInput | number
     power?: IntFieldUpdateOperationsInput | number
     money?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7854,6 +7894,7 @@ export namespace Prisma {
 
   export type CharacterCreateWithoutInventoriesInput = {
     name: string
+    health?: number
     power?: number
     money?: number
     createdAt?: Date | string
@@ -7866,6 +7907,7 @@ export namespace Prisma {
     characterId?: number
     accountId: number
     name: string
+    health?: number
     power?: number
     money?: number
     createdAt?: Date | string
@@ -7891,6 +7933,7 @@ export namespace Prisma {
 
   export type CharacterUpdateWithoutInventoriesInput = {
     name?: StringFieldUpdateOperationsInput | string
+    health?: IntFieldUpdateOperationsInput | number
     power?: IntFieldUpdateOperationsInput | number
     money?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7903,6 +7946,7 @@ export namespace Prisma {
     characterId?: IntFieldUpdateOperationsInput | number
     accountId?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    health?: IntFieldUpdateOperationsInput | number
     power?: IntFieldUpdateOperationsInput | number
     money?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7913,6 +7957,7 @@ export namespace Prisma {
   export type CharacterCreateManyAccountInput = {
     characterId?: number
     name: string
+    health?: number
     power?: number
     money?: number
     createdAt?: Date | string
@@ -7921,6 +7966,7 @@ export namespace Prisma {
 
   export type CharacterUpdateWithoutAccountInput = {
     name?: StringFieldUpdateOperationsInput | string
+    health?: IntFieldUpdateOperationsInput | number
     power?: IntFieldUpdateOperationsInput | number
     money?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7932,6 +7978,7 @@ export namespace Prisma {
   export type CharacterUncheckedUpdateWithoutAccountInput = {
     characterId?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    health?: IntFieldUpdateOperationsInput | number
     power?: IntFieldUpdateOperationsInput | number
     money?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7943,6 +7990,7 @@ export namespace Prisma {
   export type CharacterUncheckedUpdateManyWithoutAccountInput = {
     characterId?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
+    health?: IntFieldUpdateOperationsInput | number
     power?: IntFieldUpdateOperationsInput | number
     money?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
