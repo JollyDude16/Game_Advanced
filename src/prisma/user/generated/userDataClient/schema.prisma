@@ -14,11 +14,10 @@ datasource db {
 // 계정(account), 캐릭터(character), 캐릭터 아이템(equiped item), 아이템(item), 인벤토리(inventory), 상점(shop)
 
 model Account {
-  accountId Int @id @default(autoincrement()) @map("accountId")
-
+  accountId Int      @id @default(autoincrement()) @map("accountId")
   email     String   @unique @map("email")
   password  String   @map("password")
-  name      String
+  name      String   @map("name")
   createdAt DateTime @default(now()) @map("createdAt")
   updatedAt DateTime @updatedAt @map("updatedAt")
 

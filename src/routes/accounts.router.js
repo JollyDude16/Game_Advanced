@@ -2,33 +2,51 @@
 import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { userDataClient } from '../utils/prisma/index.js';
+import { userDataClient as prisma } from '../utils/prisma/index.js';
 import authMiddleware from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
 
+const validateEmail = (email) => {
+  const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+  return emailRegex.test(email);
+};
 
 //사용자 생성 API
 router.post('/sign-up', async (req, res, next) => {
   try {
     // 정보를 가져와서 저장
-    const { email, password, name, age, gender } = req.body;
+    const { email, password, confirmedPassword, name } = req.body;
 
+    if (!email || !password || !confirmedPassword || !name) {
+      return res.status(400).json({ message: '필수 필드가 누락되었습니다.' });
+    }
     // 동일 이메일 차단
     const isExistAccount = await prisma.account.findFirst({
       where: { email },
-    });
+    }); 
 
     if (isExistAccount) {
       return res.status(409).json({ message: '이미 가입된 이메일 입니다.' });
     }
+    if (password !== confirmedPassword) {
+      return res.status(400).json({ message: '비밀번호가 일치하지 않습니다.' });
+    }
+    // 이메일 형식 검증
+    if (!validateEmail(email)) {
+      return res.status(400).json({ message: '유효한 이메일 주소를 입력하세요.' });
+    }
+    if(password.length < 6){
+      return res.status(400).json({ message: '비밀번호가 6자 이상이어야합니다.' });
+    }
 
     // 사용자 생성
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await userDataClient.account.create({
+    const user = await prisma.account.create({
       data: {
         email,
         password: hashedPassword,
+        name
       },
     });
 
@@ -67,7 +85,7 @@ router.get('/accounts', authMiddleware, async(req,res,next)=>{
   const {accountId} = req.account;
 
   //2. 계정을 조회할 때, 1:N관계를 맺고 있는 캐릭터들을 조회
-  const account = await userDataClient.account.findUnique({
+  const account = await prisma.account.findUnique({
     where: { accountId: +accountId },
     select: {
     accountId: true,
