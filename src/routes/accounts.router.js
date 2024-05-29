@@ -2,8 +2,8 @@
 import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { prisma } from "../src/utils/prisma/index.js"; // 실제 경로로 수정
-import authMiddleware from "../src/middlewares/auth.middleware.js";
+import { prisma } from "../utils/prisma/index.js"; // 실제 경로로 수정
+import authMiddleware from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
 
