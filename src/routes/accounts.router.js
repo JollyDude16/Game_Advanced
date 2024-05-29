@@ -2,7 +2,7 @@
 import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { prisma } from "../utils/prisma/index.js"; // 실제 경로로 수정
+import { userDataClient } from '../utils/prisma/index.js';
 import authMiddleware from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
@@ -25,7 +25,7 @@ router.post('/sign-up', async (req, res, next) => {
 
     // 사용자 생성
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await prisma.account.create({
+    const user = await userDataClient.account.create({
       data: {
         email,
         password: hashedPassword,
@@ -67,7 +67,7 @@ router.get('/accounts', authMiddleware, async(req,res,next)=>{
   const {accountId} = req.account;
 
   //2. 계정을 조회할 때, 1:N관계를 맺고 있는 캐릭터들을 조회
-  const account = await prisma.account.findUnique({
+  const account = await userDataClient.account.findUnique({
     where: { accountId: +accountId },
     select: {
     accountId: true,
