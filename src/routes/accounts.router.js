@@ -3,9 +3,71 @@ import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { accountDataClient as prisma } from "../utils/prisma/index.js";
+import { gameDataClient } from "../utils/prisma/index.js";
 import authMiddleware from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
+
+//구매 api가 작동을 안해서..계속 작업하려고 합니다..
+router.post("/character/:characterId/purchase", authMiddleware,async(req,res)=>{
+  const characterId = parseInt(req.params.characterId, 10);
+  const accountId = req.account.id;
+  const itemsToPurchase = req.body;
+  try{
+    const character = await prisma.character.findFirst({
+      where:{
+        id: characterId,
+        accountId: accountId,
+      },
+    });
+    if(!character){
+      return res.status(403).json({message:"내 캐릭터가 아닙니다."}); 
+    }
+    let totalCost = 0;
+    
+    for(const item of itemsToPurchase){
+      const{item_code, count} = item;
+      const itemInfo = await gameDataClient.item.findUnique({
+        where: {item_code},
+        select: {item_price:true},
+      });
+      if(!itemInfo){
+        return res.status(404).json({message:`아이템 코드 ${item_code}를 찾을 수 없습니다`});
+      }
+      totalCost += itemInfo.item_price * count;
+    }
+    if (character.money < totalCost){
+      return res.status(400).json({message:"게임머니가 부족합니다."});
+    }
+    await prisma.$transaction(async (prisma)=>{
+      for(const item of itemsToPurchase){
+        const {item_code,count}=item;
+        await prisma.characterInventory.createMany({
+          data: Array(count).fill({
+            characterId,
+            itemId : item_code,
+          }),
+        });
+      }
+      await prisma.character.update({
+        where:{id:characterId},
+        data:{money:{decrement:totalCost}},
+      });
+    });
+    const updatedCharacter = await prisma.character.findUnique({
+      where: {id:characterId},
+      select: {money: true},
+    });
+    return res.status(200).json({
+      message:"아이템을 구매했습니다.",
+      money: updatedCharacter.money,
+    });
+  }catch(error){
+    console.error("아이템 구입 중 에러 발생:",error);
+    return res.status(500).json({
+      message: "아이템 구입 중 오류가 발생했습니다."});
+  } 
+})
 
 const validateEmail = email => {
   const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
